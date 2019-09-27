@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QLabel, QMainWindow, QPushButton, QMenu, QAction, QGridLayout
 from PyQt5.QtCore import Qt
+from PyQt5 import QtGui
 
 from PyQt5.QtCore import pyqtSlot
 
@@ -13,11 +14,20 @@ class MainWindow(QMainWindow):
         # grid_layout = QGridLayout()
         # self.setLayout(grid_layout)
 
-        self.setGeometry(50,50,500,300)
+        # self.setGeometry(50,50,500,300)
         self.setWindowTitle("My First App")
 
-        self.initUI()
+
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+        # self.showFullScreen()
+        self.init_toolbar()
         self.home()
+
+        mainWindow = QtGui.QWindow()
+        width = mainWindow.width()
+        height = mainWindow.height()
+        print(height)
+        print(width)
 
 
     def home(self):
@@ -25,19 +35,20 @@ class MainWindow(QMainWindow):
         label.setAlignment(Qt.AlignCenter)
         self.setCentralWidget(label)
 
-        button = QPushButton('Quit', self)
+        button = QPushButton('X', self)
         button.clicked.connect(self.close_application)
-        button.resize(100, 70)
-        button.move(100, 70)
-        button.setToolTip('This is quit button')
+        button.resize(20, 20)
+        button.move(997, 5)
+        button.setToolTip('Exit application')
 
         self.btn_login = QPushButton('Go to login page', self)
         # self.btn_login.clicked.connect(self.goto_login_page)
         self.btn_login.resize(100, 70)
         self.btn_login.move(210, 70)
         self.btn_login.setToolTip('Go to login page')
+        # self.showFullScreen()
 
-    def initUI(self):
+    def init_toolbar(self):
 
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('File')
