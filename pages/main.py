@@ -1,23 +1,22 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QPushButton
+from PyQt5.QtWidgets import QLabel, QMainWindow, QPushButton, QMenu, QAction, QGridLayout
 from PyQt5.QtCore import Qt
 
 from PyQt5.QtCore import pyqtSlot
 
-# from pages import loginPage
 
 class MainWindow(QMainWindow):
 
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
+        # grid_layout = QGridLayout()
+        # self.setLayout(grid_layout)
+
         self.setGeometry(50,50,500,300)
         self.setWindowTitle("My First App")
 
-        # widgets. See: http://doc.qt.io/qt-5/qt.html
-
-        # self.login = loginPage(self)
-
+        self.initUI()
         self.home()
 
 
@@ -32,11 +31,37 @@ class MainWindow(QMainWindow):
         button.move(100, 70)
         button.setToolTip('This is quit button')
 
-        self.button2 = QPushButton('Go to login page', self)
-        # self.button2.clicked.connect(self.goto_login_page)
-        self.button2.resize(100, 70)
-        self.button2.move(210, 70)
-        self.button2.setToolTip('Go to login page')
+        self.btn_login = QPushButton('Go to login page', self)
+        # self.btn_login.clicked.connect(self.goto_login_page)
+        self.btn_login.resize(100, 70)
+        self.btn_login.move(210, 70)
+        self.btn_login.setToolTip('Go to login page')
+
+    def initUI(self):
+
+        menubar = self.menuBar()
+        fileMenu = menubar.addMenu('File')
+
+        impMenu = QMenu('Import', self)
+        impAct = QAction('Import mail', self)
+        impMenu.addAction(impAct)
+
+        newAct = QAction('New', self)
+        quit1 = QAction('Quit', self)
+        quit1.setShortcut("Ctrl+Q")
+        # self.quit1.clicked.connect(self.goto_login_page)
+
+        fileMenu.addAction(newAct)
+        fileMenu.addMenu(impMenu)
+        fileMenu.addAction(quit1)
+        fileMenu.triggered[QAction].connect(self.processtrigger)
+
+    def processtrigger(self, q):
+        if q.text() == 'Quit':
+            sys.exit()
+        else:
+            print(q.text()+ " is triggered")
+
 
 
 
@@ -58,18 +83,3 @@ class MainWindow(QMainWindow):
 
 # app.exec_()
 
-# def changeWindow(w1, w2):
-#     w1.hide()
-#     w2.show()
-
-# if __name__ == "__main__":
-#     app = QApplication(sys.argv)
-#     main = MainWindow()
-#     login = loginPage()
-
-#     main.button2.clicked.connect(lambda: changeWindow(main, login))
-#     login.button2.clicked.connect(
-#         lambda: changeWindow(login, main))
-
-#     main.show()
-#     sys.exit(app.exec_())

@@ -6,8 +6,8 @@ from pages import MainWindow, loginPage
 
 
 def changeWindow(w1, w2):
-    w1.hide()
     w2.show()
+    w1.hide()
 
 
 if __name__ == "__main__":
@@ -15,8 +15,8 @@ if __name__ == "__main__":
     main = MainWindow()
     login = loginPage()
 
-    main.button2.clicked.connect(lambda: changeWindow(main, login))
-    login.button2.clicked.connect(lambda: changeWindow(login, main))
+    main.btn_login.clicked.connect(lambda: changeWindow(main, login))
+    login.btn_go_home.clicked.connect(lambda: changeWindow(login, main))
 
     main.show()
     sys.exit(app.exec_())
